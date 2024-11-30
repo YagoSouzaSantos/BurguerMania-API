@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace BurguerMania_API.DTOs
 {
-    public class CreateCategoryDto
+    public class UpdateCategoryDto
     {
         [Required(ErrorMessage = "O campo Nome é obrigatório.")]
         [StringLength(100, MinimumLength = 1, ErrorMessage = "O Nome deve ter entre 1 e 100 caracteres.")]

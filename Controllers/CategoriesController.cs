@@ -20,9 +20,47 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<UserDto> CreateUser(CreateCategoryDto createCategoryDto)
+    public ActionResult<CategoryDto> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
     {
-        var user = _service.CreateCategory(createCategoryDto);
-        return CreatedAtAction(nameof(GetAllCategories), new { id = user.Id }, user);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var category = _service.CreateCategory(createCategoryDto);
+        return CreatedAtAction(nameof(GetAllCategories), new { id = category.Id }, category);
     }
+
+    [HttpPut("{id}")]
+    public ActionResult<CategoryDto> UpdateCategory(int id, [FromBody] UpdateCategoryDto updateCategoryDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var updatedCategory = _service.UpdateCategory(id, updateCategoryDto);
+
+        if (updatedCategory == null)
+        {
+            return NotFound(); // Categoria não encontrada
+        }
+
+        return Ok(updatedCategory);
+    }
+
+    [HttpDelete("{id}")]
+    public ActionResult DeleteCategory(int id)
+    {
+        var result = _service.DeleteCategory(id);
+
+        if (!result)
+        {
+            return NotFound(); // Categoria não encontrada
+        }
+
+        return NoContent(); // Retorna 204 No Content se a exclusão for bem-sucedida
+    }
+
+
 }

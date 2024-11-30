@@ -19,7 +19,7 @@ public class CategoryService
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
-            Path_image = category.Path_image
+            PathImage = category.PathImage
         });
     }
 
@@ -29,7 +29,7 @@ public class CategoryService
         {
             Name = createCategoryDto.Name,
             Description = createCategoryDto.Description,
-            Path_image = createCategoryDto.Path_image
+            PathImage = createCategoryDto.PathImage
         };
 
         _repository.Add(category);
@@ -39,7 +39,42 @@ public class CategoryService
             Id = category.Id,
             Name = category.Name,
             Description = category.Description,
-            Path_image = category.Path_image
+            PathImage = category.PathImage
         };
     }
+
+    public CategoryDto UpdateCategory(int id, UpdateCategoryDto updateCategoryDto)
+    {
+        var category = _repository.GetById(id);
+        if (category == null)
+        {
+            return null; // Categoria não encontrada
+        }
+
+        category.Name = updateCategoryDto.Name;
+        category.Description = updateCategoryDto.Description;
+        category.PathImage = updateCategoryDto.PathImage;
+
+        _repository.Update(category); // Assumindo que você terá um método Update no repositório
+
+        return new CategoryDto
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description,
+            PathImage = category.PathImage
+        };
+    }
+    public bool DeleteCategory(int id)
+    {
+        var category = _repository.GetById(id);
+        if (category == null)
+        {
+            return false; // Categoria não encontrada
+        }
+
+        _repository.Delete(id); // Assumindo que você terá um método Delete no repositório
+        return true; // Exclusão bem-sucedida
+    }
+
 }
