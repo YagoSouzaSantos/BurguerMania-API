@@ -1,5 +1,7 @@
 using BurguerMania_API.DTOs;
 using BurguerMania_API.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 public class OrderService
 {
@@ -21,7 +23,7 @@ public class OrderService
             Value = order.Value,
             Products = order.OrderProducts.Select(op => new ProductOrderDto
             {
-                Product = op.Product?.Name,
+                ProductId = op.ProductId, // Altere aqui
                 Quantity = op.Quantity
             }).ToList()
         });
@@ -31,22 +33,21 @@ public class OrderService
     {
         var order = new Order
         {
-            StatusId = 1,
-            Value = 0
+            StatusId = 1, // Sempre inicia como "Pendente"
+            Value = 0,
+            OrderProducts = new List<OrderProduct>()
         };
 
         foreach (var productOrder in createOrderDto.Products)
         {
-            var product = _productRepository.GetAll()
-                .FirstOrDefault(p => p.Name.ToLower() == productOrder.Product.ToLower());
+            var product = _productRepository.GetById(productOrder.ProductId);
 
             if (product == null)
             {
-                throw new Exception($"Produto '{productOrder.Product}' não encontrado.");
+                throw new Exception($"Produto com ID '{productOrder.ProductId}' não encontrado.");
             }
 
             order.Value += (float)(product.Price * productOrder.Quantity);
-
 
             order.OrderProducts.Add(new OrderProduct
             {
@@ -62,7 +63,11 @@ public class OrderService
             Id = order.Id,
             Status = "Pendente",
             Value = order.Value,
-            Products = createOrderDto.Products
+            Products = order.OrderProducts.Select(op => new ProductOrderDto
+            {
+                ProductId = op.ProductId, // Mantenha a consistência aqui também
+                Quantity = op.Quantity
+            }).ToList()
         };
     }
 }

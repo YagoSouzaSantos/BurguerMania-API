@@ -14,7 +14,7 @@ namespace BurguerMania_API.DTOs
     public class ProductOrderDto
     {
         [Required]
-        public string? Product { get; set; }
+        public int ProductId { get; set; }
 
         [Range(1, int.MaxValue, ErrorMessage = "A quantidade deve ser maior que zero.")]
         public int Quantity { get; set; }
