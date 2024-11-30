@@ -6,3 +6,4 @@ namespace BurguerMania_API.Models
         public string? Name { get; set; }
     }
 }
+
