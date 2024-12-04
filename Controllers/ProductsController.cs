@@ -19,6 +19,33 @@ public class ProductsController : ControllerBase
         return Ok(_service.GetAllProducts());
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<ProductDto> GetProductById(int id)
+    {
+        var product = _service.GetProductById(id);
+
+        if (product == null)
+        {
+            return NotFound(); // Produto não encontrado
+        }
+
+        return Ok(product); // Retorna o produto encontrado
+    }
+
+    [HttpGet("category/{categoryId}")]
+    public ActionResult<IEnumerable<ProductDto>> GetProductsByCategoryId(int categoryId)
+    {
+        var products = _service.GetProductsByCategoryId(categoryId);
+
+        if (!products.Any())
+        {
+            return NotFound(); // Nenhum produto encontrado para a categoria
+        }
+
+        return Ok(products); // Retorna a lista de produtos da categoria
+    }
+
+
     [HttpPost]
     public ActionResult<ProductDto> CreateProduct([FromBody] CreateProductDto createProductDto)
     {

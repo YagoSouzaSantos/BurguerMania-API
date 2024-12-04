@@ -17,17 +17,31 @@ public class OrderRepository
         .ThenInclude(op => op.Product)
         .ToList();
 
-    public Order GetOrderById(int id) => _context.Orders
+    public Order? GetOrderById(int id) => _context.Orders
         .Include(o => o.Status)
         .Include(o => o.OrderProducts)
         .ThenInclude(op => op.Product)
         .FirstOrDefault(o => o.Id == id);
 
-    public Product GetProductById(int id) => _context.Products.Find(id);
+    public Product? GetProductById(int id) => _context.Products.Find(id);
 
     public void Add(Order order)
     {
         _context.Orders.Add(order);
         _context.SaveChanges();
     }
+
+    public void Delete(Order order)
+    {
+        _context.Orders.Remove(order);
+        _context.SaveChanges();
+    }
+
+    public void Update(Order order)
+    {
+        _context.Orders.Update(order);
+        _context.SaveChanges();
+    }
+
+
 }

@@ -6,6 +6,7 @@ namespace BurguerMania_API.Models
 
         public int StatusId { get; set; }
         public Status? Status { get; set; }
+        public string? Notes { get; set; }
 
         public float Value { get; set; }
 

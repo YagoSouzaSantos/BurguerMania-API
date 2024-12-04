@@ -16,7 +16,7 @@ namespace BurguerMania_API.DTOs
         public decimal Price { get; set; }
 
         [Required(ErrorMessage = "A Descrição Básica é obrigatória.")]
-        public string? BaseDescription { get; set; }
+        public string? Description { get; set; }
 
         public string? FullDescription { get; set; }
 

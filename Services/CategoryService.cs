@@ -43,19 +43,37 @@ public class CategoryService
         };
     }
 
+    public CategoryDto GetCategoryById(int id)
+    {
+        var category = _repository.GetById(id);
+
+        if (category == null)
+        {
+            return null; // Categoria não encontrada
+        }
+
+        return new CategoryDto
+        {
+            Id = category.Id,
+            Name = category.Name,
+            Description = category.Description,
+            PathImage = category.PathImage
+        };
+    }
+
     public CategoryDto UpdateCategory(int id, UpdateCategoryDto updateCategoryDto)
     {
         var category = _repository.GetById(id);
         if (category == null)
         {
-            return null; // Categoria não encontrada
+            return null;
         }
 
         category.Name = updateCategoryDto.Name;
         category.Description = updateCategoryDto.Description;
         category.PathImage = updateCategoryDto.PathImage;
 
-        _repository.Update(category); // Assumindo que você terá um método Update no repositório
+        _repository.Update(category);
 
         return new CategoryDto
         {
@@ -70,11 +88,11 @@ public class CategoryService
         var category = _repository.GetById(id);
         if (category == null)
         {
-            return false; // Categoria não encontrada
+            return false;
         }
 
-        _repository.Delete(id); // Assumindo que você terá um método Delete no repositório
-        return true; // Exclusão bem-sucedida
+        _repository.Delete(id);
+        return true;
     }
 
 }

@@ -107,3 +107,4 @@ D:\YAGO\Projetos\Restic36\BurguerMania-API\obj\Debug\net8.0\refint\BurguerMania-
 D:\YAGO\Projetos\Restic36\BurguerMania-API\obj\Debug\net8.0\BurguerMania-API.pdb
 D:\YAGO\Projetos\Restic36\BurguerMania-API\obj\Debug\net8.0\BurguerMania-API.genruntimeconfig.cache
 D:\YAGO\Projetos\Restic36\BurguerMania-API\obj\Debug\net8.0\ref\BurguerMania-API.dll
+D:\YAGO\Projetos\Restic36\BurguerMania-API\obj\Debug\net8.0\BurguerMania-API.sourcelink.json

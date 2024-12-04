@@ -12,7 +12,6 @@ namespace BurguerMania_API.DTOs
         public required string Description { get; set; }
 
         [Url(ErrorMessage = "O campo PathImage deve ser uma URL válida.")]
-        [StringLength(200, ErrorMessage = "O PathImage deve ter no máximo 200 caracteres.")]
         public required string PathImage { get; set; }
     }
 }

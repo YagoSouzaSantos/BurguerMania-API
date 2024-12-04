@@ -10,7 +10,7 @@ namespace BurguerMania_API.Models
 
         public decimal Price { get; set; }
 
-        public string? BaseDescription { get; set; }
+        public string? Description { get; set; }
 
         public string? FullDescription { get; set; }
 

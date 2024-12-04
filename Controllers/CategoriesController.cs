@@ -19,6 +19,20 @@ public class CategoriesController : ControllerBase
         return Ok(_service.GetAllCategories());
     }
 
+    [HttpGet("{id}")]
+    public ActionResult<CategoryDto> GetCategoryById(int id)
+    {
+        var category = _service.GetCategoryById(id);
+
+        if (category == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(category);
+    }
+
+
     [HttpPost]
     public ActionResult<CategoryDto> CreateCategory([FromBody] CreateCategoryDto createCategoryDto)
     {

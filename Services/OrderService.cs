@@ -21,20 +21,49 @@ public class OrderService
             Id = order.Id,
             Status = order.Status?.Name,
             Value = order.Value,
+            Notes = order.Notes,
             Products = order.OrderProducts.Select(op => new ProductOrderDto
             {
-                ProductId = op.ProductId, // Altere aqui
+                ProductId = op.ProductId,
                 Quantity = op.Quantity
             }).ToList()
         });
     }
 
+    public OrderDto GetOrderById(int id)
+    {
+        var order = _orderRepository.GetOrderById(id);
+        if (order == null)
+        {
+            throw new KeyNotFoundException("Pedido não encontrado.");
+        }
+
+        return new OrderDto
+        {
+            Id = order.Id,
+            Status = order.Status?.Name,
+            Value = order.Value,
+            Notes = order.Notes,
+            Products = order.OrderProducts.Select(op => new ProductOrderDto
+            {
+                ProductId = op.ProductId,
+                Quantity = op.Quantity
+            }).ToList()
+        };
+    }
+
     public OrderDto CreateOrder(CreateOrderDto createOrderDto)
     {
+        if (createOrderDto.Products == null || !createOrderDto.Products.Any())
+        {
+            throw new ArgumentException("A lista de produtos não pode estar vazia.");
+        }
+
         var order = new Order
         {
             StatusId = 1, // Sempre inicia como "Pendente"
             Value = 0,
+            Notes = createOrderDto.Notes,
             OrderProducts = new List<OrderProduct>()
         };
 
@@ -63,11 +92,48 @@ public class OrderService
             Id = order.Id,
             Status = "Pendente",
             Value = order.Value,
+            Notes = order.Notes,
             Products = order.OrderProducts.Select(op => new ProductOrderDto
             {
-                ProductId = op.ProductId, // Mantenha a consistência aqui também
+                ProductId = op.ProductId,
                 Quantity = op.Quantity
             }).ToList()
         };
     }
+
+
+    public void DeleteOrder(int id)
+    {
+        var order = _orderRepository.GetOrderById(id);
+        if (order == null)
+        {
+            throw new KeyNotFoundException("Pedido não encontrado.");
+        }
+        _orderRepository.Delete(order);
+    }
+
+    public OrderDto UpdateOrder(int id, CreateOrderDto updateOrderDto)
+    {
+        var order = _orderRepository.GetOrderById(id);
+        if (order == null)
+        {
+            throw new KeyNotFoundException("Pedido não encontrado.");
+        }
+
+        _orderRepository.Update(order);
+
+        return new OrderDto
+        {
+            Id = order.Id,
+            Status = order.Status?.Name,
+            Value = order.Value,
+            Notes = order.Notes,
+            Products = order.OrderProducts.Select(op => new ProductOrderDto
+            {
+                ProductId = op.ProductId,
+                Quantity = op.Quantity
+            }).ToList()
+        };
+    }
+
 }

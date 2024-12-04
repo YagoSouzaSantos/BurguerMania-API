@@ -18,10 +18,45 @@ public class ProductService
             Name = product.Name,
             PathImage = product.PathImage,
             Price = product.Price,
-            BaseDescription = product.BaseDescription,
+            Description = product.Description,
             FullDescription = product.FullDescription,
             CategoryId = product.CategoryId
         });
+    }
+    public ProductDto GetProductById(int id)
+    {
+        var product = _repository.GetById(id);
+        if (product == null)
+        {
+            return null; // Produto não encontrado
+        }
+
+        return new ProductDto
+        {
+            Id = product.Id,
+            Name = product.Name,
+            PathImage = product.PathImage,
+            Price = product.Price,
+            Description = product.Description,
+            FullDescription = product.FullDescription,
+            CategoryId = product.CategoryId
+        };
+    }
+
+    public IEnumerable<ProductDto> GetProductsByCategoryId(int categoryId)
+    {
+        return _repository.GetAll()
+            .Where(product => product.CategoryId == categoryId)
+            .Select(product => new ProductDto
+            {
+                Id = product.Id,
+                Name = product.Name,
+                PathImage = product.PathImage,
+                Price = product.Price,
+                Description = product.Description,
+                FullDescription = product.FullDescription,
+                CategoryId = product.CategoryId
+            });
     }
 
     public ProductDto CreateProduct(CreateProductDto createProductDto)
@@ -31,7 +66,7 @@ public class ProductService
             Name = createProductDto.Name,
             PathImage = createProductDto.PathImage,
             Price = createProductDto.Price,
-            BaseDescription = createProductDto.BaseDescription,
+            Description = createProductDto.Description,
             FullDescription = createProductDto.FullDescription,
             CategoryId = createProductDto.CategoryId
         };
@@ -44,7 +79,7 @@ public class ProductService
             Name = product.Name,
             PathImage = product.PathImage,
             Price = product.Price,
-            BaseDescription = product.BaseDescription,
+            Description = product.Description,
             FullDescription = product.FullDescription,
             CategoryId = product.CategoryId
         };
@@ -61,7 +96,7 @@ public class ProductService
         product.Name = updateProductDto.Name;
         product.PathImage = updateProductDto.PathImage;
         product.Price = updateProductDto.Price;
-        product.BaseDescription = updateProductDto.BaseDescription;
+        product.Description = updateProductDto.Description;
         product.FullDescription = updateProductDto.FullDescription;
         product.CategoryId = updateProductDto.CategoryId;
 
@@ -73,7 +108,7 @@ public class ProductService
             Name = product.Name,
             PathImage = product.PathImage,
             Price = product.Price,
-            BaseDescription = product.BaseDescription,
+            Description = product.Description,
             FullDescription = product.FullDescription,
             CategoryId = product.CategoryId
         };
