@@ -42,7 +42,8 @@ Antes de iniciar, certifique-se de ter:
     dotnet ef database update
 
 5. Inicie a aplicação:
-   ````dotnet run
+   ```bash
+   dotnet run
 
 ## Documentação 📖
 A API utiliza o Swagger para documentação. Após iniciar a aplicação, você pode acessar a interface interativa em:
